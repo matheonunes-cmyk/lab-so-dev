@@ -6,51 +6,72 @@
 # Cole abaixo a saída de cada comando e anote o que observou.
 
 echo $$
-  PID do shell: 
+  PID do shell: 47
 
 cat /proc/[PID]/status   (substitua [PID] pelo número real)
-  PID:
-  PPID (processo pai):
-  State:
+  PID: 47
+  PPID (processo pai): 1
+  State: S (sleeping)
 
 cat /proc/[PID]/stat (campos relevantes)
-  Campo 2 — nome do executável:
-  Campo 3 — estado:
-  Campos 14 e 15 — utime / stime:
+  Campo 2 — nome do executável: (sh)
+  Campo 3 — estado: S
+  Campos 14 e 15 — utime / stime: 20 33  
 
 ps aux (primeiras linhas)
-  [cole aqui]
+  USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  1.3   3136  2516 ?        S    08:05   0:00 /bin/sh /sbin/init
+root         2  0.0  0.0      0     0 ?        S    08:05   0:00 [kthreadd]
+root         3  0.0  0.0      0     0 ?        I    08:05   0:00 [kworker/0:0]
+root         4  0.0  0.0      0     0 ?        I<   08:05   0:00 [kworker/0:0H]
+root         5  0.0  0.0      0     0 ?        I    08:05   0:00 [kworker/u2:0]
 
 
 # PARTE B — Processo filho
 # Cole a saída dos comandos e responda:
 
 sleep 5m &
-  PID do filho: 
+  PID do filho: 89  (aparentemente)
 
 cat /proc/[FILHO]/status | grep -E "Pid|PPid|State"
-  [cole aqui]
+  State:  S (sleeping)
+Pid:    89
+PPid:   47
+TracerPid:      0
 
 ps -o pid,ppid,stat,cmd (antes do kill)
-  [cole aqui]
+   47     1 Ss   sh -l
+   89    47 S    sleep 5m
+   94    47 R+   ps -o pid,ppid,stat,cmd
 
 ps -o pid,ppid,stat,cmd (depois do kill)
-  [cole aqui]
+  [se eu entendi certo, era pra executar   kill 89    , correto?]
 
+ PID  PPID STAT CMD
+   47     1 Ss   sh -l
+   96    47 R+   ps -o pid,ppid,stat,cmd
 
 # PARTE C — Questões de síntese
 
-# 1. O campo PPID em /proc/$$/status indica o processo pai do shell.
+# 1. O campo PPID em /proc/$$/status indica o processo pai do shell. ==1
 #    Execute ps -o pid,ppid,cmd e localize o par shell -> processo pai.
 #    O que esse encadeamento sugere sobre como os processos sao
 #    criados no Linux?
 
 Resposta 1:
+[esse foi o resultado de    ps -o pid,ppid,cmd   ]
+ PID  PPID STAT CMD
+   47     1 Ss   sh -l
+   96    47 R+   ps -o pid,ppid,stat,cmd
+[eu imagino que o par shell seja     -1    ]
+["O que esse encadeamento sugere sobre como os processos sao criados no Linux?"    eu não faço ideia]
 
 
 # 2. O arquivo /proc/<PID>/status mostra o campo State com uma letra
 #    (S, R, Z...). Depois de executar kill $FILHO e rodar ps novamente,
 #    o que aconteceu com o processo filho? O que isso te faz pensar  
-#    sobre a vida de um processo?
+#    sobre a vida de um processo?kill
 
 Resposta 2:
+
+[mesmo após    kill 47    , o processo continua ali. o resultado do     ps -o pid,ppid,cmd       está teoricamente inalterado]
