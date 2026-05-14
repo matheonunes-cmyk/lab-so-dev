@@ -9,8 +9,7 @@
 # No shell moderno, qual mecanismo cumpre papel equivalente?
 
 Resposta:
-
-# ─────────────────────────────────────────────────────
+# O equivalente no shell moderno seriam os comandos de redirecionamento, com descritores de arquivos especiais
 
 # ATIVIDADE 7 — Make
 
@@ -20,10 +19,11 @@ Resposta:
 #    que não mudou?
 
 Resposta 1:
-
+O mecanismo de regras e dependências dentro do Makefile, olhando pras dependências, comparando as data/hora dos arquivos alvo e suas dependências para saber se precisa recompilar o arquivo
 
 # 2. O monitor unificava "supervisor, carregador e rotinas de I/O
 #    sob uma interface textual". O que o Makefile unifica no fluxo
 #    de desenvolvimento moderno?
 
 Resposta 2:
+Ele unifica as etapas de construção e automação do projeto de software
